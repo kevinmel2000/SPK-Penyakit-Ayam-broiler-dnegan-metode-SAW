@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Session;
 use App\Bobot;
+use App\Ranking;
 use App\X;
 use App\Knowledge_Base;
 use App\Http\Requests;
@@ -128,6 +129,18 @@ class usercontroller extends Controller
         $bobot->Hasil= $id_penyakit;
         $bobot->save();
 
+        
+        for($i=1 ; $i<=$jumlah; $i++){
+          $x = X::find($i);
+          $ranking= new Ranking();
+          $ranking->id_bobot = $bobot->id;
+          $ranking->id_knowledge= $i;
+          $ranking->hasil = $x->total;
+
+          $ranking->save();
+        }
+
+
 
        return redirect()->route('user.profile');
     }
@@ -146,9 +159,12 @@ class usercontroller extends Controller
     public function getHasil($id_diagnosa){
       $bobot = Bobot::find($id_diagnosa);
       $id_penyakit = $bobot->Hasil;
+      $alternatif = Knowledge_Base::all();
       $penyakit = Knowledge_Base::find($id_penyakit);
       $nama_penyakit= $penyakit->name;
       $penanggulangan = $penyakit->Penanggulangan;
-      return view('user.hasil')->with(['hasil'=> $bobot, 'penyakit'=> $nama_penyakit , 'penanggulangan' => $penanggulangan]);
+      $ranking = DB::table('ranking')->where('id_bobot',$id_diagnosa)->get();
+
+      return view('user.hasil')->with(['hasil'=> $bobot, 'penyakit'=> $nama_penyakit , 'penanggulangan' => $penanggulangan, 'alternatif'=> $alternatif, 'ranking' => $ranking]);
     }
 }
