@@ -24,7 +24,7 @@ class usercontroller extends Controller
             'password'  => 'required|min:4'
          ]);
 
-       if (Auth::attempt(['email'=> $request->input('email'),'password'=>$request->input('password')])) 
+          if( (Auth::attempt(['email'=> $request->input('email'),'password'=>$request->input('password')])) && (Auth::user()->type=='user')   )
          {
              if (Session::has('oldUrl')){
                  $oldUrl = Session::get('oldUrl');
@@ -33,6 +33,15 @@ class usercontroller extends Controller
              }
          return redirect()->route('user.profile'); //bila login sukses ke halaman profile
          }
+
+      else if((Auth::attempt(['email'=> $request->input('email'),'password'=>$request->input('password')])) && (Auth::user()->type=='admin') ){
+             if (Session::has('oldUrl')){
+                 $oldUrl = Session::get('oldUrl');
+                 Session::forget('oldUrl');
+                 return redirect()->to($oldUrl);
+             }
+         return redirect()->route('admin.profile');
+      }
 
          else{
              return redirect()->back(); //kalo gagal refresh ulang 
@@ -74,10 +83,32 @@ class usercontroller extends Controller
         $arr_bobot = array($B0,$B1,$B2,$B3,$B4,$B5,$B6,$B7);
 
         $jumlah= Knowledge_Base::count();
+        $sum_X= X::count();
         $knowledge = Knowledge_Base::all();
+
+
+        if ($sum_X != $jumlah) {
+          $temp=$jumlah-$sum_X;
+          for($i=1; $i<=$temp; $i++){
+            $x =  new X();
+            $x->save();
+          }
+        }
+        
+        $sumx=1;
+
+        $Xbig= X::all();
+        foreach ($Xbig as $xcount) {
+            $xcount->dual_id = $sumx;
+            $sumx++;
+            $xcount->save();
+        }
+        
+        
         $id=1;
         foreach ($knowledge as $k ) {
-          $x= X::find($id);
+          //$x= X::find($id);
+          $x = X::where('dual_id', $id)->first();
           $x->C0= $k->C0/$max;
           $x->C1= $k->C1/$max;
           $x->C2= $k->C2/$max;
@@ -91,7 +122,7 @@ class usercontroller extends Controller
         }
 
          for($i=1 ; $i<=$jumlah; $i++){
-           $x = X::find($i);
+           $x = X::where('dual_id', $i)->first();
            $x->C0 = ($x->C0*$arr_bobot[0]);
            $x->C1 = ($x->C1*$arr_bobot[1]);
            $x->C2 = ($x->C2*$arr_bobot[2]);
@@ -104,6 +135,10 @@ class usercontroller extends Controller
            $x->total= $total;
            $x->save();
         }
+
+
+      
+
         $x_count = X::all();
          $best=0;
          $id_penyakit=0;
@@ -111,7 +146,7 @@ class usercontroller extends Controller
           $possible_best= $count->total;
           if ($possible_best>$best) {
              $best= $possible_best;
-             $id_penyakit= $count->id;
+             $id_penyakit= $count->dual_id;
           }
         }
 
@@ -129,19 +164,16 @@ class usercontroller extends Controller
         $bobot->Hasil= $id_penyakit;
         $bobot->save();
 
-        
+       
         for($i=1 ; $i<=$jumlah; $i++){
-          $x = X::find($i);
+          $x = X::where('dual_id', $i)->first();
           $ranking= new Ranking();
           $ranking->id_bobot = $bobot->id;
           $ranking->id_knowledge= $i;
           $ranking->hasil = $x->total;
 
-          $ranking->save();
-        }
-
-
-
+          $ranking->save();       
+         }
        return redirect()->route('user.profile');
     }
 

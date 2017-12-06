@@ -1,19 +1,20 @@
 @extends('master.layout')
 
 @section('title')
-        Halaman Histori Diagnosa
+        Halaman Knowledge Base Admin
 @endsection
 @include('partials.header')
 @section('content')
 <hr>
-<a href="{{route('user.profile')}}" type="button" class="btn btn-primary ">Kembali ke Halaman Utama</a>
+<a href="{{route('admin.profile')}}" type="button" class="btn btn-primary ">Kembali ke Halaman Utama</a>
+<a href="{{route('admin.tambah_knowledge')}}" type="button" class="btn btn-info pull-right ">Tambah Knowledge Base</a>
 <div class="row">
    <div class="col-md-12"><br></div>
    <div class="col-md-12"><br></div>
 
 </div>
   	<div class="row panel panel-default">
-	  <div class="panel-heading">Histori Diagnosa Gejala</div>
+	  <div class="panel-heading">Halaman Knowledge Base Admin</div>
 	  <div class="panel-body">
 	  	<hr>
 		   <table id="example" class="table table-hover">

@@ -21,6 +21,10 @@ class RedirectIfAuthenticated
             if (Auth::user()->type=='user') {
                return redirect('/user/profile');
             }
+
+            if (Auth::user()->type='admin') {
+                return redirect('/admin/profile');
+            }
            
         }
         return $next($request);

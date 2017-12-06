@@ -30,7 +30,7 @@ Route::post('/signin',[
 Route::get('/logout',[
 	'uses' => 'usercontroller@getLogout',
 	'as' => 'user.logout',
-	'middleware' => 'user'
+	'middleware' => 'auth'
 ]);
 
 Route::get('/user/profile',[
@@ -67,4 +67,56 @@ Route::get('/user/hasil_diagnosa/{id_diagnosa}',[
 	'uses' => 'usercontroller@getHasil',
 	'as'=> 'user.hasil',
 	'middleware'=>'user'
+]);
+
+
+
+
+
+Route::get('/admin/profile',[
+	'uses' => 'AdminController@getProfile',
+	'as' => 'admin.profile',
+	'middleware' => 'admin'
+]);
+
+Route::get('/admin/tambah_diagnosa',[
+	'uses' => 'AdminController@getTambah',
+	'as' => 'admin.tambah_diagnosa',
+	'middleware' => 'admin'
+]);
+
+Route::post('/admin/tambah_diagnosa',[
+	'uses'=> 'usercontroller@postTambah',
+	'as'=> 'admin.tambah_diagnosa',
+	'middleware' => 'admin'
+]);
+
+Route::get('/admin/histori',[
+	'uses' => 'AdminController@getHistori',
+	'as' => 'admin.histori',
+	'middleware' => 'admin'
+]);
+
+Route::get('/admin/hasil_diagnosa/{id_diagnosa}',[
+	'uses' => 'AdminController@getHasil',
+	'as'=> 'admin.hasil',
+	'middleware'=>'admin'
+]);
+
+Route::get('/admin/knowledge',[
+	'uses' => 'AdminController@getKnowledge',
+	'as'=> 'admin.knowledge',
+	'middleware'=>'admin'
+]);
+
+Route::get('/admin/knowledge/tambah',[
+	'uses' => 'AdminController@getTambahKnowledge',
+	'as'=> 'admin.tambah_knowledge',
+	'middleware'=>'admin'
+]);
+
+Route::post('/admin/knowledge/tambah',[
+	'uses' => 'AdminController@postTambahKnowledge',
+	'as' => 'admin.tambah_knowledge',
+	'middleware' => 'admin'
 ]);

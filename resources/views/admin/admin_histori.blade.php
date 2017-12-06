@@ -6,7 +6,7 @@
 @include('partials.header')
 @section('content')
 <hr>
-<a href="{{route('user.profile')}}" type="button" class="btn btn-primary ">Kembali ke Halaman Utama</a>
+<a href="{{route('admin.profile')}}" type="button" class="btn btn-primary ">Kembali ke Halaman Utama</a>
 <div class="row">
    <div class="col-md-12"><br></div>
    <div class="col-md-12"><br></div>
@@ -19,7 +19,7 @@
 		   <table id="example" class="table table-hover">
 				<thead>
 					<tr>
-						<th>Nama Penyakit</th>
+						<th>Nama User yang menginput</th>
 						<th>Nafsu Makan</th>
 						<th>Minum</th>
 						<th>Nafas</th>
@@ -28,85 +28,93 @@
 						<th>Lendir</th>
 						<th>Kejang</th>
 						<th>Suhu Tubuh</th>
+						<th>Lihat Hasil</th>
 					</tr>
 				</thead>
 				<tbody>
-					@foreach($knowledge as $K)
+					@foreach($bobot as $b)
 					<tr>
 						<td>
-							{{$K->name}}
+							@foreach($user as $u)
+								@if($b->id_user==$u->id)
+								{{$u->name}}
+								@endif
+							@endforeach
 						</td>
 						<td>
-							@if($K->C0==1)
+							@if($b->B0==1)
 							Sehat
-							@elseif($K->C0==3)
+							@elseif($b->B0==3)
 							Rendah
-							@elseif($K->C0==5)
+							@elseif($b->B0==5)
 							Tinggi
 							@endif
 						</td>
 						<td>
-							@if($K->C1==1)
+							@if($b->B1==1)
 							Sehat
-							@elseif($K->C1==3)
+							@elseif($b->B1==3)
 							Rendah
-							@elseif($K->C1==5)
+							@elseif($b->B1==5)
 							Tinggi
 							@endif
 						</td>
 						<td>
-							@if($K->C2==1)
+							@if($b->B2==1)
 							Sehat
-							@elseif($K->C2==3)
+							@elseif($b->B2==3)
 							Rendah
-							@elseif($K->C2==5)
+							@elseif($b->B2==5)
 							Tinggi
 							@endif
 						</td>
 						<td>
-							@if($K->C3==1)
+							@if($b->B3==1)
 							Sehat
-							@elseif($K->C3==3)
+							@elseif($b->B3==3)
 							Rendah
-							@elseif($K->C3==5)
+							@elseif($b->B3==5)
 							Tinggi
 							@endif
 						</td>
 						<td>
-							@if($K->C4==1)
+							@if($b->B4==1)
 							Sehat
-							@elseif($K->C4==3)
+							@elseif($b->B4==3)
 							Rendah
-							@elseif($K->C4==5)
+							@elseif($b->B4==5)
 							Tinggi
 							@endif
 						</td>
 						<td>
-							@if($K->C5==1)
+							@if($b->B5==1)
 							Sehat
-							@elseif($K->C5==3)
+							@elseif($b->B5==3)
 							Rendah
-							@elseif($K->C5==5)
+							@elseif($b->B5==5)
 							Tinggi
 							@endif
 						</td>
 						<td>
-							@if($K->C6==1)
+							@if($b->B6==1)
 							Sehat
-							@elseif($K->C6==3)
+							@elseif($b->B6==3)
 							Rendah
-							@elseif($K->C6==5)
+							@elseif($b->B6==5)
 							Tinggi
 							@endif
 						</td>
 						<td>
-							@if($K->C7==1)
+							@if($b->B7==1)
 							Sehat
-							@elseif($K->C7==3)
+							@elseif($b->B7==3)
 							Rendah
-							@elseif($K->C7==5)
+							@elseif($b->B7==5)
 							Tinggi
 							@endif
+						</td>
+						<td>
+							<a href="{{route('admin.hasil',['id_diagnosa' => $b->id] )}}" type="button" class="btn btn-primary">Detail</a>
 						</td>
 
 					</tr>
