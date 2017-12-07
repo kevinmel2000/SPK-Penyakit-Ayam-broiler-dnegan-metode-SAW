@@ -120,3 +120,15 @@ Route::post('/admin/knowledge/tambah',[
 	'as' => 'admin.tambah_knowledge',
 	'middleware' => 'admin'
 ]);
+
+Route::get('/admin/edit_knowledge/{id_knowledge}',[
+	'uses' => 'AdminController@getEdit',
+	'as'=> 'admin.edit',
+	'middleware'=>'admin'
+]);
+
+Route::get('/delete/{id_knowledge}',[
+		'uses'=> 'AdminController@getDelete',
+		'as'=> 'admin.delete',
+		'middleware'=>'admin'
+]);

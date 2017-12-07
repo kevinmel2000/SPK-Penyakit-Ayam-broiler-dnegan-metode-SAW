@@ -13,6 +13,7 @@
    <div class="col-md-12"><br></div>
 
 </div>
+@include('partials.notif')
   	<div class="row panel panel-default">
 	  <div class="panel-heading">Halaman Knowledge Base Admin</div>
 	  <div class="panel-body">
@@ -111,8 +112,8 @@
 							Tinggi
 							@endif
 						</td>
-						<td><a href="" type="button" class="btn btn-primary"> edit </td>
-						<td><a href="" type="button" class="btn btn-danger"> hapus</td>
+						<td><a href="{{route('admin.edit',['id_knowlegde' => $K->id])}}" type="button" class="btn btn-primary"> edit </td>
+						<td><a href="{{route('admin.delete',['id_knowlegde' => $K->id])}}" type="button" class="btn btn-danger"> hapus</td>
 					</tr>
 			     	@endforeach		
 				</tbody>

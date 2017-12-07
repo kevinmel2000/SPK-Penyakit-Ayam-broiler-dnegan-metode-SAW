@@ -266,7 +266,7 @@ class usercontroller extends Controller
       $id_penyakit = $bobot->Hasil;
       $alternatif = Knowledge_Base::all();
       //$penyakit = Knowledge_Base::find($id_penyakit);
-      $penyakit = Knowledge_Base::where('dual_id',$id_penyakit);
+      $penyakit = Knowledge_Base::where('dual_id',$id_penyakit)->first();
       $nama_penyakit= $penyakit->name;
       $penanggulangan = $penyakit->Penanggulangan;
       $ranking = DB::table('ranking')->where('id_bobot',$id_diagnosa)->get();

@@ -34,7 +34,7 @@ class AdminController extends Controller
       $bobot = Bobot::find($id_diagnosa);
       $id_penyakit = $bobot->Hasil;
       $alternatif = Knowledge_Base::all();
-      $penyakit = Knowledge_Base::find($id_penyakit);
+      $penyakit = Knowledge_Base::where('dual_id',$id_penyakit)->first();
       $nama_penyakit= $penyakit->name;
       $penanggulangan = $penyakit->Penanggulangan;
       $ranking = DB::table('ranking')->where('id_bobot',$id_diagnosa)->get();
@@ -79,6 +79,29 @@ class AdminController extends Controller
         $knowledge->C7 = $B7;
 
         $knowledge->save();
-        return redirect()->route('admin.tambah_knowledge');
+
+
+        $all_k = Knowledge_Base::all();
+        $increments=1;
+        foreach ($all_k as $k) {
+          $k->dual_id=$increments;
+          $k->save();
+          $increments++;
+        }
+        
+        return redirect()->route('admin.knowledge');
     }
+
+  public function getEdit(Request $request, $id_knowledge){
+    $knowledge = Knowledge_Base::find($id_knowledge);
+
+    return view('admin.edit_knowledge')->with(['knowledge'=> $knowledge]);
+
+  }
+
+  public function getDelete($id_knowledge){
+     $knowledge = Knowledge_Base::where('id', $id_knowledge)->first(); 
+    $knowledge->delete();
+    return redirect()->route('admin.knowledge')->with(['message'=>' berhasil dihapus']);
+  }
 }
