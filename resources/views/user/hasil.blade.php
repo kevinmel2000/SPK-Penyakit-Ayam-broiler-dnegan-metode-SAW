@@ -80,7 +80,7 @@
 		  @foreach($ranking as $r)	
 		   {{$r->hasil}} :
 		   		@foreach($alternatif as $c)
-		   		    @if($r->id_knowledge==$c->id)
+		   		    @if($r->id_knowledge==$c->dual_id)
 		   		    {{$c->name}}
 		   		    @endif
 		   		@endforeach

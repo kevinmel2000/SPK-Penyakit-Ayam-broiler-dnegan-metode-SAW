@@ -29,6 +29,8 @@
 						<th>Lendir</th>
 						<th>Kejang</th>
 						<th>Suhu Tubuh</th>
+						<th>Edit</th>
+						<th>Hapus</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -109,7 +111,8 @@
 							Tinggi
 							@endif
 						</td>
-
+						<td><a href="" type="button" class="btn btn-primary"> edit </td>
+						<td><a href="" type="button" class="btn btn-danger"> hapus</td>
 					</tr>
 			     	@endforeach		
 				</tbody>

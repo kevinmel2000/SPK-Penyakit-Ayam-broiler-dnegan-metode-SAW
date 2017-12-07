@@ -83,16 +83,89 @@ class usercontroller extends Controller
         $arr_bobot = array($B0,$B1,$B2,$B3,$B4,$B5,$B6,$B7);
 
         $jumlah= Knowledge_Base::count();
-        $sum_X= X::count();
         $knowledge = Knowledge_Base::all();
 
+        $increments=1;
+        foreach ($knowledge as $k) {
+          $k->dual_id=$increments;
+          $k->save();
+          $increments++;
+        }
+
+        $C = [[]];
+        $total = [];
+        $i=0;
+        foreach ($knowledge as $k ) {
+            $C[$i][0]= $k->C0/$max;
+            $C[$i][1]= $k->C1/$max;
+            $C[$i][2]= $k->C2/$max;
+            $C[$i][3]= $k->C3/$max;
+            $C[$i][4]= $k->C4/$max;
+            $C[$i][5]= $k->C5/$max;
+            $C[$i][6]= $k->C6/$max;
+            $C[$i][7]= $k->C7/$max;
+          $i++;
+          }
+
+        
+        for($x=0 ; $x<$jumlah; $x++){
+          $count=0;
+            for ($y=0; $y < 8; $y++) { 
+              $C[$x][$y]= ($C[$x][$y]*$arr_bobot[$y]);
+              $count=($count+$C[$x][$y]);
+            }
+        $total[$x]=$count;
+        }
+
+        $id_penyakit=0;
+        $best=0;
+        $count_penyakit=0;
+        for ($a=0; $a <$jumlah ; $a++) { 
+          $possible_best = $total[$a];
+          if ($possible_best > $best) {
+             $best= $possible_best;
+             $id_penyakit=  $count_penyakit+1;
+          }
+           $count_penyakit++;
+        }
+
+      
+
+        $bobot = new Bobot;
+
+        $bobot->B0 = $B0;
+        $bobot->B1 = $B1;
+        $bobot->B2 = $B2;
+        $bobot->B3 = $B3;
+        $bobot->B4 = $B4;
+        $bobot->B5 = $B5;
+        $bobot->B6 = $B6;
+        $bobot->B7 = $B7;
+        $bobot->id_user = Auth::user()->id;
+        $bobot->Hasil= $id_penyakit;
+        $bobot->save();
+
+        for($r=0 ; $r<$jumlah; $r++){
+          $ranking= new Ranking();
+          $ranking->id_bobot = $bobot->id;
+          $ranking->id_knowledge= $r+1;
+          $ranking->hasil = $total[$r];
+          $ranking->save();       
+         }
+
+
+
+//-----------------------------------------------------
+         /*
+         $sum_X= X::count();
 
         if ($sum_X != $jumlah) {
-          $temp=$jumlah-$sum_X;
-          for($i=1; $i<=$temp; $i++){
-            $x =  new X();
-            $x->save();
-          }
+
+            $temp=$jumlah-$sum_X;
+            for($i=1; $i<=$temp; $i++){
+              $x =  new X();
+              $x->save();
+            }
         }
         
         $sumx=1;
@@ -107,7 +180,6 @@ class usercontroller extends Controller
         
         $id=1;
         foreach ($knowledge as $k ) {
-          //$x= X::find($id);
           $x = X::where('dual_id', $id)->first();
           $x->C0= $k->C0/$max;
           $x->C1= $k->C1/$max;
@@ -174,6 +246,7 @@ class usercontroller extends Controller
 
           $ranking->save();       
          }
+      */
        return redirect()->route('user.profile');
     }
 
@@ -192,7 +265,8 @@ class usercontroller extends Controller
       $bobot = Bobot::find($id_diagnosa);
       $id_penyakit = $bobot->Hasil;
       $alternatif = Knowledge_Base::all();
-      $penyakit = Knowledge_Base::find($id_penyakit);
+      //$penyakit = Knowledge_Base::find($id_penyakit);
+      $penyakit = Knowledge_Base::where('dual_id',$id_penyakit);
       $nama_penyakit= $penyakit->name;
       $penanggulangan = $penyakit->Penanggulangan;
       $ranking = DB::table('ranking')->where('id_bobot',$id_diagnosa)->get();
