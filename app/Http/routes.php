@@ -132,3 +132,9 @@ Route::get('/delete/{id_knowledge}',[
 		'as'=> 'admin.delete',
 		'middleware'=>'admin'
 ]);
+
+Route::get('/delete_history/{id_bobot}',[
+		'uses'=> 'AdminController@getDeleteHistory',
+		'as'=> 'admin.deletehistori',
+		'middleware'=>'admin'
+]);

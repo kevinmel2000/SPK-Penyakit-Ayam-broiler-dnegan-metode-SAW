@@ -99,7 +99,7 @@
 		  </div>
 
 		   <div class="form-group">
-		  	<label>Suhu Tubuh:  </label>
+		  	<label>Penanggulangan:  </label>
 		  	<textarea class="form-control" rows="3" name="penanggulangan" placeholder="Penanggulangan Penyakit"></textarea>
 		  </div>
 

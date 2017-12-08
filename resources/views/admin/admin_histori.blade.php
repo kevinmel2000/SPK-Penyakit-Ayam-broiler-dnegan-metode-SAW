@@ -12,6 +12,7 @@
    <div class="col-md-12"><br></div>
 
 </div>
+@include('partials.notif')
   	<div class="row panel panel-default">
 	  <div class="panel-heading">Histori Diagnosa Gejala</div>
 	  <div class="panel-body">
@@ -29,6 +30,7 @@
 						<th>Kejang</th>
 						<th>Suhu Tubuh</th>
 						<th>Lihat Hasil</th>
+						<th>Hapus</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -116,6 +118,7 @@
 						<td>
 							<a href="{{route('admin.hasil',['id_diagnosa' => $b->id] )}}" type="button" class="btn btn-primary">Detail</a>
 						</td>
+						<td><a href="{{route('admin.deletehistori',['id_bobot' => $b->id] )}}" type="button"  class="btn btn-danger">Hapus</a></td>
 
 					</tr>
 			     	@endforeach		

@@ -89,7 +89,7 @@ class AdminController extends Controller
           $increments++;
         }
         
-        return redirect()->route('admin.knowledge');
+        return redirect()->route('admin.knowledge')->with(['message'=> 'knowledge base berhasil ditambah']);
     }
 
   public function getEdit(Request $request, $id_knowledge){
@@ -103,5 +103,11 @@ class AdminController extends Controller
      $knowledge = Knowledge_Base::where('id', $id_knowledge)->first(); 
     $knowledge->delete();
     return redirect()->route('admin.knowledge')->with(['message'=>' berhasil dihapus']);
+  }
+
+  public function getDeleteHistory($id_bobot){
+    $bobot = Bobot::find($id_bobot);
+    $bobot->delete();
+    return redirect()->route('admin.histori')->with(['message'=>'Histori Diagnosa berhasil dihapus']);
   }
 }

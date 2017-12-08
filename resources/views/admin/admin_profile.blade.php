@@ -6,6 +6,7 @@
 @include('partials.header')
 @section('content')
 
+@include('partials.notif')
 <div class="page-header">
   <h1>Sistem Pendukung Keputusan untuk Diagnosa Penyakit Ayam Ternak <small>Silahkan pilih menu</small></h1>
 </div>

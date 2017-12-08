@@ -246,8 +246,12 @@ class usercontroller extends Controller
 
           $ranking->save();       
          }
-      */
-       return redirect()->route('user.profile');
+      */if (Auth::user()->type =="admin") {
+        # code...
+         return redirect()->route('admin.profile')->with(['message' => 'diagnosa berhasil ditambah']);
+      }
+      
+       return redirect()->route('user.profile')->with(['message' => 'diagnosa berhasil ditambah']);
     }
 
     public function getHistori(){
