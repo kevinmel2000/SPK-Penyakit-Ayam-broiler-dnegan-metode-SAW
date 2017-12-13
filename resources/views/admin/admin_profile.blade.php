@@ -13,4 +13,5 @@
 <a href="{{route('admin.tambah_diagnosa')}}" type="button" class="btn btn-primary btn-lg btn-block">Tambah Diagnosa</a>
 <a href="{{route('admin.histori')}}" type="button" class="btn btn-primary btn-lg btn-block">Histori Diagnosa Semua User</a>
 <a href="{{route('admin.knowledge')}}" type="button" class="btn btn-primary btn-lg btn-block">Knowledge Base</a>
+<a href="{{route('admin.daftar_user')}}" type="button"  class="btn btn-primary btn-lg btn-block">Daftar User</a>
 @endsection

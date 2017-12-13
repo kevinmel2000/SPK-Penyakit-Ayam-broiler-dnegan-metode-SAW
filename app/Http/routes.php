@@ -127,14 +127,21 @@ Route::get('/admin/edit_knowledge/{id_knowledge}',[
 	'middleware'=>'admin'
 ]);
 
-Route::get('/delete/{id_knowledge}',[
+Route::get('/admin/delete/{id_knowledge}',[
 		'uses'=> 'AdminController@getDelete',
 		'as'=> 'admin.delete',
 		'middleware'=>'admin'
 ]);
 
-Route::get('/delete_history/{id_bobot}',[
+Route::get('/admin/delete_history/{id_bobot}',[
 		'uses'=> 'AdminController@getDeleteHistory',
 		'as'=> 'admin.deletehistori',
 		'middleware'=>'admin'
 ]);
+
+Route::get('/admin/daftar_user',[
+		'uses'=> 'AdminController@getDaftarUser',
+		'as'=> 'admin.daftar_user',
+		'middleware'=>'admin'
+]);
+

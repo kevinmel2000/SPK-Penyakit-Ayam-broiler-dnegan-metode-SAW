@@ -110,4 +110,9 @@ class AdminController extends Controller
     $bobot->delete();
     return redirect()->route('admin.histori')->with(['message'=>'Histori Diagnosa berhasil dihapus']);
   }
+
+  public function getDaftarUser(){
+    $user = User::all();
+    return view('admin.daftar_user')->with(['user'=>$user]);
+  }
 }
